@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <title>User creation</title>
+</head>
+<body>
+<main id="login_panel">
+
+
+<div id="left_login_panel">
+    <h1>utwórz użytkownika</h1>
+    <br>
+    <form id="user_creation">
+        <label>
+            imię:
+            <input size="10" maxlength="13" minlength="2" type="text">
+        </label>
+        <br><br>
+        <label>
+            wiek:
+            <input type="number" max="110" min="1">
+        </label>
+        <br><br>
+        <label>
+            notatka:
+        </label>
+        <br>
+        <label>
+            <textarea wrap="soft"></textarea>
+        </label>
+        <br><br>
+        <button type="submit">utwórz</button>
+    </form>
+</div>
+</main>
+
+</body>
+</html>

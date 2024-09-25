@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>recent test</title>
+</head>
+<body>
+<nav id="navbar">
+  <div class="main_tab">
+    <button class="nav_button" onclick="window.location.href = 'legacy_tests'">archiwum</button>
+  </div>
+  <div class="main_tab">
+    <button class="nav_button" onclick="window.location.href = 'recent_test'">ostatnie</button>
+  </div>
+  <div class="main_tab">
+    <button class="nav_button" onclick="window.location.href = 'tests_comparison.html'">porównanie</button>
+  </div>
+</nav>
+
+
+
+<div style="width: 600px; height: 400px;">
+  <canvas id="myChart"></canvas>
+</div>
+
+<script>
+  // Dane osi X i Y
+  const labels = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj']; // Oś X
+  const dataY = [10, 20, 15, 30, 25]; // Oś Y (wartości)
+
+  // Konfiguracja wykresu
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Wykres liniowy',
+      data: dataY,
+      borderColor: 'rgba(75, 192, 192, 1)',
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      fill: true,
+      tension: 0 // Ustawienie gładkich linii
+    }]
+  };
+
+  const config = {
+    type: 'line', // Typ wykresu - może być 'line', 'bar', 'pie' itp.
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true // Ustawienia skali osi Y
+        }
+      }
+    }
+  };
+  // Rysowanie wykresu na stronie
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
+<footer><button onclick="location.href='home.html'">fuck go back!</button> </footer>
+</body>
+</html>

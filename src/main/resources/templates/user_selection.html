@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <title>Chose user</title>
+</head>
+<body>
+<main id="login_panel">
+
+
+    <div id="right_login_panel">
+        <h1 id="login_user">zaloguj się jako:</h1>
+        <div id="user_list">
+            <table id="user_table">
+                <thead>
+                <tr>
+                    <th>imie</th>
+                    <th>wiek</th>
+                    <th>notatka</th>
+                    <th>wybór</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.age}"></td>
+                    <td th:text="${user.note}"></td>
+                    <td>
+                        <button th:id="${user.id}" th:text="${user.name}" onclick="loginUser(this)"></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <form>
+            <button th:onsubmit=""></button>
+        </form>
+    </div>
+</main>
+<script>
+    function loginUser(button) {
+        document.getElementById("login_user").innerHTML = "Zaloguj jako: " + button.textContent;
+        const url = new URL(window.location);
+        url.searchParams.set('userId', button.id);
+        window.history.pushState({}, '', url);
+    }
+</script>
+</body>
+</html>
