@@ -2,46 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>authentication</title>
-  <link rel="stylesheet" type="text/css" href="/style.css">
-  <meta name="description" content="">
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>authentication</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
-
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#fafafa">
+    <meta name="theme-color" content="#fafafa">
 </head>
 
 <body>
 <nav id="navbar">
-  <div class="main_tab">
-    <button class="nav_button" onclick="window.location.href='/legacy_tests'" >archiwum</button>
-  </div>
-  <div class="main_tab">
-    <button class="nav_button" onclick="window.location.href = '/recent_test'">ostatnie</button>
-  </div>
-  <div class="main_tab">
-    <button class="nav_button" onclick="window.location.href = '/tests_comparison'">porównanie</button>
-  </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="window.location.href='/archives_tests'">archiwum</button>
+    </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="window.location.href = '/recent_test'">ostatnie</button>
+    </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="window.location.href = '/tests_comparison'">porównanie</button>
+    </div>
 </nav>
-  <div>
+<div>
     <h1 id="name_of_login_user"></h1></div>
-<main id="login_panel">
-
-
+<main class="mainPanel">
+    <h1 th:text="${user.toString()}"></h1>
 </main>
+<footer>
+    <form th:action="@{/sign_out}" method="get">
+    <button type="submit" name="method" value="1"> zmień użytkownika </button>
+    <button type="submit" name="method" value="2"> wyloguj się </button>
+    </form>
+</footer>
 </body>
-<script>
-
-
-</script>
 </html>

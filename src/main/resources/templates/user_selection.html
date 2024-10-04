@@ -33,18 +33,20 @@
                 </tbody>
             </table>
         </div>
-        <form>
-            <button th:onsubmit=""></button>
+        <form th:action="@{/chose_user}" method="get">
+            <label for="userId">ID Użytkownika:</label>
+            <input type="text" id="userId" name="userId" />
+            <button type="submit">Wybierz</button>
         </form>
     </div>
 </main>
 <script>
     function loginUser(button) {
-        document.getElementById("login_user").innerHTML = "Zaloguj jako: " + button.textContent;
-        const url = new URL(window.location);
-        url.searchParams.set('userId', button.id);
-        window.history.pushState({}, '', url);
+        document.getElementById("userId").value = button.id;
+        let name = "${user}"
+        console.log(name);
     }
+
 </script>
 </body>
 </html>

@@ -2,13 +2,15 @@ package ekg.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
-@Table(name = "user", schema = "ekg_test", catalog = "")
+@Table(name = "user", schema = "ekg_test")
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private long  id;
     @Basic
     @Column(name = "name")
     private String name;
@@ -19,12 +21,8 @@ public class UserEntity {
     @Column(name = "note")
     private String note;
 
-    public int getId() {
+    public long getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -60,15 +58,13 @@ public class UserEntity {
 
         if (id != that.id) return false;
         if (age != that.age) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (note != null ? !note.equals(that.note) : that.note != null) return false;
-
-        return true;
+        if (!Objects.equals(name, that.name)) return false;
+        return Objects.equals(note, that.note);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result =  (int)id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + age;
         result = 31 * result + (note != null ? note.hashCode() : 0);
@@ -77,9 +73,9 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "imie:"+name+"\n"
-                +"wiek"+ age+"\n"+
-                "notatka"+note
+        return "name:"+name+"\n"
+                +"age"+ age+"\n"+
+                "note"+note
                 ;
     }
 }

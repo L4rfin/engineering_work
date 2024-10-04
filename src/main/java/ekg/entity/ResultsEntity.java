@@ -2,16 +2,18 @@ package ekg.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
-@Table(name = "results", schema = "ekg_test", catalog = "")
+@Table(name = "results", schema = "ekg_test")
 public class ResultsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private long id;
     @Basic
     @Column(name = "user_Id")
-    private int userId;
+    private long userId;
     @Basic
     @Column(name = "note")
     private String note;
@@ -19,19 +21,15 @@ public class ResultsEntity {
     @Column(name = "result")
     private String result;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -60,18 +58,26 @@ public class ResultsEntity {
 
         if (id != that.id) return false;
         if (userId != that.userId) return false;
-        if (note != null ? !note.equals(that.note) : that.note != null) return false;
-        if (result != null ? !result.equals(that.result) : that.result != null) return false;
-
-        return true;
+        if (!Objects.equals(note, that.note)) return false;
+        return Objects.equals(result, that.result);
     }
 
     @Override
     public int hashCode() {
-        int result1 = id;
-        result1 = 31 * result1 + userId;
+        int result1 = (int) id;
+        result1 = (int) (31 * result1 + userId);
         result1 = 31 * result1 + (note != null ? note.hashCode() : 0);
         result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
         return result1;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultsEntity{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", note='" + note + '\'' +
+                ", result=" + result +
+                '}';
     }
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<nav id="navbar">
+  <div class="main_tab">
+    <button class="nav_button" onclick="window.location.href = 'archives_tests'">archiwum</button>
+  </div>
+  <div class="main_tab">
+    <button class="nav_button" onclick="window.location.href = 'recent_test'">ostatnie</button>
+  </div>
+  <div class="main_tab">
+    <button class="nav_button" onclick="window.location.href = 'tests_comparison'">porównanie</button>
+  </div>
+</nav>
+
+<main>
+
+  <table id="user_table">
+    <thead>
+    <tr>
+      <th>imie</th>
+      <th>wiek</th>
+      <th>notatka</th>
+      <th>wybór</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="result : ${results}">
+      <td th:text="${result.id}"></td>
+      <td th:text="${result.userId}"></td>
+      <td th:text="${result.note}"></td>
+      <td th:text="${result.result}"></td>
+      <td>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</main>
+
+
+<footer><button onclick="location.href='home'">fuck go back!</button> </footer>
+
+
+
+</body>
+</html>

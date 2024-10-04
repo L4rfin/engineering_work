@@ -3,9 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/style.css">
+
     <title>Login</title>
 </head>
 <body>
+<main class="main_tab">
+    <div class="button-container">
+        <form th:action="@{/login-check}" method="get">
+            <label for="passwordField">wprowadzi chasło:</label>
+            <input type="password" id="passwordField" name="password">
 
+            <div class="button-container">
+                <h1>wybierze sposób logowania:</h1>
+            </div>
+            <button class="button-login" type="submit" name="method" value="1" >wybierz użytkownika</button>
+            <button class="button-login" type="submit" name="method" value="2">nowy użytkownik</button>
+        </form>
+    </div>
+
+</main>
 </body>
 </html>

@@ -12,15 +12,15 @@
 <div id="left_login_panel">
     <h1>utwórz użytkownika</h1>
     <br>
-    <form id="user_creation">
+    <form id="user_creation" th:action="@{/create_user_input}" method="get">
         <label>
             imię:
-            <input size="10" maxlength="13" minlength="2" type="text">
+            <input name="user_name" size="10" maxlength="13" minlength="2" type="text">
         </label>
         <br><br>
         <label>
             wiek:
-            <input type="number" max="110" min="1">
+            <input name="user_age" type="number" max="110" min="1">
         </label>
         <br><br>
         <label>
@@ -28,7 +28,7 @@
         </label>
         <br>
         <label>
-            <textarea wrap="soft"></textarea>
+            <textarea name="user_note" wrap="soft"></textarea>
         </label>
         <br><br>
         <button type="submit">utwórz</button>
