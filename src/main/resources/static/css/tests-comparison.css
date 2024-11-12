@@ -1,0 +1,11 @@
+.graph-container{
+    display: flex;
+}
+#container-box{
+    display: contents;
+}
+#myChart1, #myChart2, #myChart3{
+    max-width: 60%;
+    max-height: 20em;
+    min-height: 20vh;
+}

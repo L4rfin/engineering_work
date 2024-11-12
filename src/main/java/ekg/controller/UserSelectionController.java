@@ -25,14 +25,19 @@ public class UserSelectionController {
     }
 
     @GetMapping("/chose_user")
-    public String goToHome(@RequestParam("userId") Long userId, Model model) {
+    public String goToHome(@RequestParam(value = "userId", required = false, defaultValue = "0") Long userId,
+                           @RequestParam("method") int method,
+                           Model model) {
+        if (method == 1) {
+            return "redirect:/user_option";
+        }
         UserEntity user = repository.findById(userId).orElse(null);
         if (user != null) {
             model.addAttribute("user", user);
             appConfig.setUser(user);
-            return "/home";
+            return "redirect:/home";
         }
         model.addAttribute("users", repository.findAll());
-        return "/user_selection";
+        return "redirect:/user_selection";
     }
 }

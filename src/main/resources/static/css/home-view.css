@@ -1,0 +1,11 @@
+.mainPanel{
+    display: flex;
+}
+#left_panel_note{
+    margin: 3%;
+    width: 30%;
+    background-color: rgb(255, 140, 0, 50%);
+    border: 3px solid rgb(255, 165, 0);
+
+
+}

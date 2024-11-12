@@ -2,25 +2,56 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/style.css">
-
+    <meta name="color-scheme" content="light only">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login-view.css}">
     <title>Login</title>
 </head>
 <body>
-<main class="main_tab">
-    <div class="button-container">
-        <form th:action="@{/login-check}" method="get">
-            <label for="passwordField">wprowadzi chasło:</label>
-            <input type="password" id="passwordField" name="password">
+<main id="login_main_container">
 
-            <div class="button-container">
-                <h1>wybierze sposób logowania:</h1>
+    <div class="button-container">
+        <div class="logo_div">
+            <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+            <p class="logo_item">HeartPi</p>
+        </div>
+        <h1>Wybierze sposób logowania:</h1>
+        <form class="/logo_item" th:action="@{/login}" method="post">
+            <br>
+            <br>
+            <div id="tooltip">
+                <label>wybierz konto:
+                    <select name="username">
+                        <option>user</option>
+                        <option>admin</option>
+                    </select>
+                </label>
+                <label for="passwordField">wprowadzi hasło:</label>
+                <input type="password" id="passwordField" name="password">
+                <span id="tooltip-text">błędne hasło</span>
             </div>
-            <button class="button-login" type="submit" name="method" value="1" >wybierz użytkownika</button>
-            <button class="button-login" type="submit" name="method" value="2">nowy użytkownik</button>
+            <br>
+            <br>
+            <button type="submit">zaloguj</button>
         </form>
     </div>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const query = urlParams.get('error');
+        if (query!==null) {
+            const password = document.getElementById("passwordField");
+            const popup = document.getElementById("tooltip");
+            const popup_div = document.getElementById("tooltip-text");
+            password.style.backgroundColor = "rgb(255,0,0,20%)";
+            password.style.borderColor = "rgb(255,0,0)";
+            popup_div.style.visibility = "visible";
+            popup.style.visibility = "visible";
 
+        }
+
+        console.log(query);
+    </script>
 </main>
 </body>
 </html>

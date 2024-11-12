@@ -4,13 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light only">
     <title>authentication</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home-view.css}">
 
     <meta name="theme-color" content="#fafafa">
 </head>
 
 <body>
+<div id="home_logo_panel">
+    <div class="logo_item_container">
+        <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+        <p class="logo_item">HeartPi</p>
+    </div>
+</div>
 <nav id="navbar">
     <div class="main_tab">
         <button class="nav_button" onclick="window.location.href='/archives_tests'">archiwum</button>
@@ -22,15 +30,39 @@
         <button class="nav_button" onclick="window.location.href = '/tests_comparison'">porównanie</button>
     </div>
 </nav>
+<div style="min-height: 150px"></div>
 <div>
     <h1 id="name_of_login_user"></h1></div>
 <main class="mainPanel">
-    <h1 th:text="${user.toString()}"></h1>
+    <div id="left_panel_note">
+        <h3>Zalecenia przed urzyciem!</h3>
+        <br>
+        <h4>
+            <ul style="list-style: inside;">
+                <li>Upewnij się, że kable nie są poskręcane ani poplątane</li>
+                <li>Upewnij się, że czujniki są dobrze przyczepione </li>
+                <li>Podczas badania rozluźnij się i nie rozmawiaj</li>
+                <li>Przed badaniem ułóż się w pozycji leżącej lub siedzącej</li>
+            </ul>
+        </h4>
+    </div>
+    <div id="user_info_panel">
+        <div>
+        <h1 th:text="${user.getName()}"></h1>
+        <h4 th:text="'wiek: '+${user.getAge()}"></h4>
+        </div>
+        <h3 th:text="${user.getNote()}"></h3>
+        <form th:action="@{/user_edition}" method="get">
+        <button type="submit">Edytuj</button>
+        </form>
+    </div>
 </main>
-<footer>
+<div style="min-height: 50px"></div>
+<footer class="nav_footer">
+
     <form th:action="@{/sign_out}" method="get">
-    <button type="submit" name="method" value="1"> zmień użytkownika </button>
-    <button type="submit" name="method" value="2"> wyloguj się </button>
+        <button type="submit" name="method" value="2"> zmień użytkownika</button>
+        <button type="submit" name="method" value="1"> wyloguj się</button>
     </form>
 </footer>
 </body>

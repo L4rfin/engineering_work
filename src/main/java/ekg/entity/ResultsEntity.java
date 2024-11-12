@@ -18,11 +18,15 @@ public class ResultsEntity {
     @Column(name = "note")
     private String note;
     @Basic
-    @Column(name = "result")
+    @Column(name = "result",columnDefinition = "LONGTEXT")
     private String result;
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getUserId() {

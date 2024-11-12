@@ -1,23 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
-  <link rel="stylesheet" type="text/css" href="/style.css">
-  <meta charset="UTF-8">
-  <title>tests_comparison</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/tests-comparison.css}">
+    <meta name="color-scheme" content="light only">
+    <meta charset="UTF-8">
+    <title>tests_comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
-<body>
+<body style="display: table">
+<div id="home_logo_panel">
+    <div class="logo_item_container">
+        <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+        <p class="logo_item">HeartPi</p>
+    </div>
+</div>
 <nav id="navbar">
-  <div class="main_tab">
-    <button class="nav_button" onclick="location.href = 'archives_tests'">archiwum</button>
-  </div>
-  <div class="main_tab">
-    <button class="nav_button" onclick="location.href = 'recent_test'">ostatnie</button>
-  </div>
-  <div class="main_tab">
-    <button class="nav_button" onclick="location.href = 'tests_comparison'">porównanie</button>
-  </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="location.href = 'archives_tests'">archiwum</button>
+    </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="location.href = 'recent_test'">ostatnie</button>
+    </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="location.href = 'tests_comparison'">porównanie</button>
+    </div>
 </nav>
-<footer><button onclick="location.href='home'">fuck go back!</button> </footer>
+<br>
+<h1 id="info_bar"></h1>
+<div id="container-box">
+    <div class="graph-container">
+        <canvas id="myChart1"></canvas>
+        <form style="visibility: hidden" id="fromToChart1" th:action="@{/chart_edit}" method="post">
+            <h1>informacje o badaniu</h1>
+            <label for="note1"> natatka z badania</label>
+            <textarea id="note1" name="note" th:text="${note1}" wrap="soft"></textarea>
+            <button type="submit" name="method" value="save1">zapisz zmiany</button>
+            <button type="reset">resetuj</button>
+            <button type="submit" name="method" value="delete1">usuń</button>
+        </form>
+    </div>
+    <div class="graph-container">
+        <canvas id="myChart2"></canvas>
+        <form style="visibility: hidden" id="fromToChart2" th:action="@{/chart_edit}" method="post">
+            <h1>informacje o badaniu</h1>
+            <label for="note2"> natatka z badania</label>
+            <textarea id="note2" name="note" wrap="soft" th:text="${note2}"></textarea>
+            <button type="submit" name="method" value="save2">zapisz zmiany</button>
+            <button type="reset">resetuj</button>
+            <button type="submit" name="method" value="delete2">usuń</button>
+        </form>
+    </div>
+    <div class="graph-container">
+        <canvas id="myChart3"></canvas>
+    </div>
+
+</div>
+<script th:inline="javascript">
+    let value_chose = /*[[${value_chose}]]*/ false;
+    let time1 = /*[[${labels1}]]*/ null;
+    let impulse1 = /*[[${dataY1}]]*/ null;
+    let time2 = /*[[${labels2}]]*/ null;
+    let impulse2 = /*[[${dataY2}]]*/ null;
+    if (time1 !== null && impulse1 !== null) {
+        console.log("generate graph 1")
+        makeGraph(1, time1, impulse1);
+    }
+    if (time2 !== null && impulse2 !== null) {
+        console.log("generate graph 1 and 2")
+        makeGraph(2, time2, impulse2);
+        graphCompare();
+    }
+    if (value_chose !== null) {
+        let info = document.getElementById("info_bar");
+        info.innerText = "nie wybrano testu do wyświetlenia";
+    }
+
+    function makeGraph(number, time, impulse) {
+        const ctx = document.getElementById("myChart" + number).getContext("2d");
+
+        document.getElementById("fromToChart" + number).style.visibility ="visible";
+        console.log(ctx);
+        const ekgChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: time, // Oś X - czas
+                datasets: [{
+                    label: 'Sygnał EKG',
+                    data: impulse, // Oś Y - wartości sygnału
+                    borderColor: 'rgba(255, 0, 0, 0.7)',
+                    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                    fill: true,
+                    borderWidth: 2,
+                    pointRadius: 0, // Ukrycie punktów na linii
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear', // Ustawienia osi czasu
+                        title: {
+                            display: true,
+                            text: 'Czas (s)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Napięcie (mV)'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                animation: {
+                    duration: 0 // Wyłączenie animacji
+                }
+            }
+        });
+    }
+
+    function graphCompare() {
+        let label;
+        if (time1.length > time2.length) {
+            label = time1;
+        } else label = time2;
+        const ctx = document.getElementById('myChart3').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',  // Typ wykresu (może być 'line', 'bar', 'pie', itd.)
+            data: {
+                labels: label,  // Etykiety osi X
+                datasets: [
+                    {
+                        label: 'Seria A',
+                        data: impulse1,  // Pierwszy zestaw danych
+                        borderColor: 'rgba(255, 99, 132, 1)',  // Kolor linii
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',  // Kolor tła pod linią
+                        fill: false  // Czy wypełniać obszar pod linią
+                    },
+                    {
+                        label: 'Seria B',
+                        data: impulse2,  // Drugi zestaw danych
+                        borderColor: 'rgba(54, 162, 235, 1)',  // Kolor linii
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',  // Kolor tła pod linią
+                        fill: false  // Czy wypełniać obszar pod linią
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'linear', // Ustawienia osi czasu
+                        title: {
+                            display: true,
+                            text: 'Czas (s)'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Napięcie (mV)'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                animation: {
+                    duration: 0 // Wyłączenie animacji
+                }
+            }
+        });
+    }
+</script>
+
+<footer class="nav_footer">
+    <button onclick="location.href='home'">back!</button>
+</footer>
 
 </body>
 </html>

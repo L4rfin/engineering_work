@@ -73,7 +73,8 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "name:"+name+"\n"
+        return  "id:"+id+"\n"
+                +"name:"+name+"\n"
                 +"age"+ age+"\n"+
                 "note"+note
                 ;

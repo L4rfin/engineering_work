@@ -2,14 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <meta name="color-scheme" content="light only">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/user-selection.css"    >
     <title>Chose user</title>
 </head>
 <body>
 <main id="login_panel">
-
-
-    <div id="right_login_panel">
+    <div id="user_list_panel">
+        <div class="logo_div">
+            <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+            <p class="logo_item">HeartPi</p>
+        </div>
         <h1 id="login_user">zaloguj się jako:</h1>
         <div id="user_list">
             <table id="user_table">
@@ -36,7 +40,9 @@
         <form th:action="@{/chose_user}" method="get">
             <label for="userId">ID Użytkownika:</label>
             <input type="text" id="userId" name="userId" />
-            <button type="submit">Wybierz</button>
+            <br>
+            <button type="submit" name="method" value="1">anuluj</button>
+            <button type="submit" name="method" value="0">Wybierz</button>
         </form>
     </div>
 </main>
@@ -46,7 +52,6 @@
         let name = "${user}"
         console.log(name);
     }
-
 </script>
 </body>
 </html>

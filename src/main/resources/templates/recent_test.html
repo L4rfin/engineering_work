@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light only">
     <title>recent test</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+<div id="home_logo_panel">
+    <div class="logo_item_container">
+        <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+        <p class="logo_item">HeartPi</p>
+    </div>
+</div>
 <nav id="navbar">
     <div class="main_tab">
         <button class="nav_button" onclick="window.location.href = 'archives_tests'">archiwum</button>
@@ -20,8 +27,8 @@
 </nav>
 
 
-<div style="width: 600px; height: 400px;">
-    <canvas id="myChart"></canvas>
+<div style="width: 100%; height: 400px;">
+    <canvas id="myChart" style="width: 100%"></canvas>
 
 </div>
 <form th:action="@{/submitTest }" method="get">
@@ -36,47 +43,59 @@
 </form>
 <script>
     const labels = [[${labels}]];
-    const dataY = [[${dataY}]] ;
-
-
+    const dataY = [[${dataY}]];
+    console.log(dataY);
     // Konfiguracja wykresu
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Wykres liniowy',
-            data: dataY,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            fill: true,
-            tension: 0
-        }]
-    };
-
-    const config = {
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const ekgChart = new Chart(ctx, {
         type: 'line',
-        data: data,
+        data: {
+            labels: labels, // Oś X - czas
+            datasets: [{
+                label: 'Sygnał EKG',
+                data: dataY, // Oś Y - wartości sygnału
+                borderColor: 'rgba(255, 0, 0, 0.7)',
+                backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                fill: true,
+                borderWidth: 2,
+                pointRadius: 0, // Ukrycie punktów na linii
+            }]
+        },
         options: {
+            responsive: true,
             scales: {
+                x: {
+                    type: 'linear', // Ustawienia osi czasu
+                    title: {
+                        display: true,
+                        text: 'Czas (s)'
+                    }
+                },
                 y: {
-                    beginAtZero: true
+                    title: {
+                        display: true,
+                        text: 'Napięcie (mV)'
+                    }
                 }
+            },
+            plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            animation: {
+                duration: 0 // Wyłączenie animacji
             }
         }
-    };
-
-
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
-    console.log(myChart.valueOf());
-
+    });
+    console.log(ekgChart)
 </script>
 <div id="data_storage" style="display:none; background: darkviolet">
 </div>
 
-<footer>
-    <button onclick="location.href='home'">fuck go back!</button>
+<footer class="nav_footer">
+    <button onclick="location.href='home'">strona główna</button>
 </footer>
 </body>
 </html>

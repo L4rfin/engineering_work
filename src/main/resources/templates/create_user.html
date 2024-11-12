@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
+    <meta name="color-scheme" content="light only">
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/user-creation.css}">
     <title>User creation</title>
 </head>
 <body>
@@ -10,6 +12,10 @@
 
 
 <div id="left_login_panel">
+    <div class="logo_item_container">
+        <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+        <p class="logo_item">HeartPi</p>
+    </div>
     <h1>utwórz użytkownika</h1>
     <br>
     <form id="user_creation" th:action="@{/create_user_input}" method="get">
@@ -31,7 +37,8 @@
             <textarea name="user_note" wrap="soft"></textarea>
         </label>
         <br><br>
-        <button type="submit">utwórz</button>
+        <button type="submit" name="method" value="1">anuluj</button>
+        <button type="submit" name="method" value="0">utwórz</button>
     </form>
 </div>
 </main>

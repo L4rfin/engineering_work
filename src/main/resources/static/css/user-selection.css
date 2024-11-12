@@ -1,0 +1,13 @@
+#user_list_panel{
+    display: flow;
+    align-self: center;
+    padding: 5%;
+    background-color: rgb(255, 140, 0, 50%);
+    box-shadow: 5px 5px 5px rgb(128, 128, 128, 50%);
+    border-radius: 15px;
+    border-style: solid;
+    border-color: orange;
+}
+#user_table{
+    border-collapse: collapse;
+}

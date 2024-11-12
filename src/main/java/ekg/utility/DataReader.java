@@ -3,22 +3,22 @@ package ekg.utility;
 import java.util.List;
 
 public class DataReader {
-    private List<Integer> y;
-    private List<Integer> x;
+    private List<Double> y;
+    private List<Double> x;
 
-    public List<Integer> getX() {
+    public List<Double> getX() {
         return x;
     }
 
-    public void setX(List<Integer> labels) {
+    public void setX(List<Double> labels) {
         this.x = labels;
     }
 
-    public List<Integer> getY() {
+    public List<Double> getY() {
         return y;
     }
 
-    public void setY(List<Integer> dataY) {
+    public void setY(List<Double> dataY) {
         this.y = dataY;
     }
 }

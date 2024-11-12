@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="light only">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login-view.css}">
+    <title>Title</title>
+</head>
+<body>
+<main id="login_main_container">
+
+    <div class="button-container">
+        <div class="logo_div">
+            <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+            <p class="logo_item">HeartPi</p>
+        </div>
+
+        <form th:action="@{user_selection_option}" method="get">
+            <br>
+            <button class="button-login" type="submit" name="method" value="1">wybierz użytkownika</button>
+            <button class="button-login" type="submit" name="method" value="2">nowy użytkownik</button>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user-edition-view.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light only">
+    <title>User edit</title>
+</head>
+<body>
+
+
+<div id="home_logo_panel">
+    <div class="logo_item_container">
+        <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+        <p class="logo_item">HeartPi</p>
+    </div>
+</div>
+<nav id="navbar">
+    <div class="main_tab">
+        <button class="nav_button" onclick="window.location.href='/archives_tests'">archiwum</button>
+    </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="window.location.href = '/recent_test'">ostatnie</button>
+    </div>
+    <div class="main_tab">
+        <button class="nav_button" onclick="window.location.href = '/tests_comparison'">porównanie</button>
+    </div>
+</nav>
+<h1>User Edition page</h1>
+<form th:action="@{/send_edit}" method="post">
+    <label for="username">imei</label>
+    <input id="username" name="username" type="text" th:value="${user.getName()}">
+    <label for="age">imei</label>
+    <input id="age" name="age" type="text" th:value="${user.getAge()}">
+    <label for="note">imei</label>
+    <input id="note" name="note" type="text" th:value="${user.getNote()}">
+
+    <button type="submit">zatwierdź</button>
+    <button type="reset">resetuj</button>
+</form>
+<form th:action="@{/delete_user}" method="post">
+    <button style="background-color:red" type="submit">usuń</button>
+</form>
+<footer class="nav_footer">
+    <button onclick="location.href='home'">strona główna</button>
+</footer>
+</body>
+</html>

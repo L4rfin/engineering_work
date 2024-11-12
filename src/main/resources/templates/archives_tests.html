@@ -1,12 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/archives-view.css}">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta name="color-scheme" content="light only">
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
 <body>
+  <div id="home_logo_panel">
+    <div class="logo_item_container">
+      <img class="logo_item" style="max-width: 150px" th:src="@{/img/logo.png}" alt="">
+      <p class="logo_item">HeartPi</p>
+    </div>
+  </div>
 <nav id="navbar">
   <div class="main_tab">
     <button class="nav_button" onclick="window.location.href = 'archives_tests'">archiwum</button>
@@ -20,12 +29,12 @@
 </nav>
 
 <main>
-
+<br>
   <table id="user_table">
     <thead>
     <tr>
-      <th>imie</th>
-      <th>wiek</th>
+      <th>id badania</th>
+      <th>badany</th>
       <th>notatka</th>
       <th>wybór</th>
     </tr>
@@ -33,10 +42,12 @@
     <tbody>
     <tr th:each="result : ${results}">
       <td th:text="${result.id}"></td>
-      <td th:text="${result.userId}"></td>
+      <td th:text="${user.getName()}"></td>
       <td th:text="${result.note}"></td>
-      <td th:text="${result.result}"></td>
       <td>
+        <form class="center_element" th:action="@{/archives_chosen_test}" method="get">
+        <button type="submit" name="id_test" th:value="${result.id}" th:text="badanie + ${result.id}"></button>
+        </form>
       </td>
     </tr>
     </tbody>
@@ -45,7 +56,7 @@
 </main>
 
 
-<footer><button onclick="location.href='home'">fuck go back!</button> </footer>
+<footer class="nav_footer"><button onclick="location.href='home'">strona główna</button> </footer>
 
 
 
