@@ -31,9 +31,9 @@ public class ArchivesController {
     @GetMapping("/archives_chosen_test")
     public String resultsOfTest(
                                 @RequestParam("id_test") long idTest) {
-        appConfig.setResults_1(repository.getById(idTest));
+        appConfig.setResults(repository.getById(idTest));
         System.out.println(repository.getById(idTest));
-        return "redirect:/tests_comparison";
+        return "redirect:tests_comparison";
     }
 
 }

@@ -2,17 +2,15 @@ package ekg.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ekg.AppConfig;
-import ekg.ResultRepository;
 import ekg.entity.ResultsEntity;
+import ekg.services.ResultRepositoryService;
+import ekg.utility.DataFolderService;
 import ekg.utility.DataReader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,25 +18,27 @@ import java.util.List;
 @Controller
 public class RecentController {
     private final AppConfig appConfig;
-    private final ResultRepository repository;
+    private final ResultRepositoryService repository;
     String fileName;
     private DataReader data;
     List<Double> time;
     List<Double> impact;
-    public RecentController(AppConfig appConfig, ResultRepository repository) {
+
+    public RecentController(AppConfig appConfig, ResultRepositoryService repository) {
         this.appConfig = appConfig;
         this.repository = repository;
     }
 
 
     @GetMapping("/recent_test")
-    public String showRecent(Model model) throws IOException {
-        this.fileName = appConfig.getUser().getId()+".json";
-        ObjectMapper mapper = new ObjectMapper();
-        data = mapper.readValue(new File("src/main/java/ekg/data/"+this.fileName), DataReader.class);
-        impact = data.getY();
+    public String showRecent(Model model){
+        DataFolderService dataFolderService = new DataFolderService();
+        this.data = dataFolderService.readDataFileOf(appConfig.getUser().getId());
+        impact = this.data.getY();
         this.time = new ArrayList<>();
-        for (double i=0;i<impact.size();i++){time.add(i);}
+        for (double i = 0; i < impact.size(); i++) {
+            time.add(i);
+        }
 
         model.addAttribute("user", appConfig.getUser());
         model.addAttribute("labels", time);
@@ -53,16 +53,12 @@ public class RecentController {
             @RequestParam("note_input") String note,
             @RequestParam("method") int method,
             Model model) {
+                DataFolderService dataFolderService = new DataFolderService();
         if (method == 1) {
-            try{
-                FileWriter fileWriter = new FileWriter("src/main/java/ekg/data/" + fileName);
-                fileWriter.append("{\"x\":[],"+"\"y\":[]}");
-                fileWriter.close();
-                model.addAttribute("user", appConfig.getUser());
-                model.addAttribute("labels", "");
-                model.addAttribute("dataY", "");
-                return "redirect:/recent_test";
-            }catch (Exception e){
+            try {
+                dataFolderService.eraseData(appConfig.getUser().getId());
+                return "redirect:recent_test";
+            } catch (Exception e) {
                 System.out.println(Arrays.toString(e.getStackTrace()));
             }
 
@@ -75,19 +71,20 @@ public class RecentController {
                 results.setNote(note);
                 String jsonObject = new ObjectMapper().writeValueAsString(data);
                 results.setResult(jsonObject);
-                repository.save(results);
+                ;
 
 
-                if (repository.findById(results.getId()).isPresent()) {
-                    appConfig.setResults_1(results);
-                    return "redirect:/tests_comparison";
+                if (repository.saveResult(results)) {
+                    appConfig.setResults(results);
+                    dataFolderService.eraseData(appConfig.getUser().getId());
+                    return "redirect:tests_comparison";
                 }
             } catch (Exception e) {
                 System.out.println(Arrays.toString(e.getStackTrace()));
-                return "redirect:/recent_test";
+                return "redirect:recent_test";
             }
         }
-        return "redirect:/recent_test";
+        return "redirect:recent_test";
     }
 
 }

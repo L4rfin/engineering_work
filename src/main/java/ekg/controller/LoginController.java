@@ -1,22 +1,23 @@
 package ekg.controller;
 
 import ekg.AppConfig;
-import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class LoginController {
     final
     AppConfig appConfig;
 
-    final
-    UserDetailsService userDetailsService;
 
 
-    public LoginController(AppConfig appConfig, UserDetailsService userDetailsService) {
+
+    public LoginController(AppConfig appConfig) {
         this.appConfig = appConfig;
-        this.userDetailsService = userDetailsService;
+
     }
     @GetMapping("/")
     public String redirectShowLogin() {
@@ -25,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
 }

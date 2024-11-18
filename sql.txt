@@ -1,0 +1,5 @@
+CREATE DATABASE ekg_test;
+
+CREATE TABLE `ekg_test`.`user` (`id` INT NULL AUTO_INCREMENT , `name` TEXT NOT NULL , `age` INT NOT NULL , `note` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `ekg_test`.`results` (`id` INT NOT NULL AUTO_INCREMENT , `idUser` INT NULL , `note` VARCHAR(255) NOT NULL , `result` JSON NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

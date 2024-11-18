@@ -17,17 +17,17 @@ public class HomeController {
     @GetMapping("/home")
     public String showHome(Model model) {
         model.addAttribute("user", appConfig.getUser());
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/sign_out")
     public String signOut(@RequestParam("method") int method) {
         appConfig.setUser(null);
-        appConfig.setResults_1(null);
+        appConfig.setResults(null);
         appConfig.setResults_2(null);
         if (method == 1) {
-            return "redirect:/user_option";
-        } else return "redirect:/user_selection";
+            return "redirect:user_option";
+        } else return "redirect:user_selection";
     }
 
 }

@@ -21,7 +21,7 @@ public class UserSelectionController {
     @GetMapping("/user_selection")
     public String showUserSelection(Model model) {
         model.addAttribute("users", repository.findAll());
-        return "/user_selection";
+        return "user_selection";
     }
 
     @GetMapping("/chose_user")
@@ -29,15 +29,15 @@ public class UserSelectionController {
                            @RequestParam("method") int method,
                            Model model) {
         if (method == 1) {
-            return "redirect:/user_option";
+            return "redirect:user_option";
         }
         UserEntity user = repository.findById(userId).orElse(null);
         if (user != null) {
             model.addAttribute("user", user);
             appConfig.setUser(user);
-            return "redirect:/home";
+            return "redirect:home";
         }
         model.addAttribute("users", repository.findAll());
-        return "redirect:/user_selection";
+        return "redirect:user_selection";
     }
 }

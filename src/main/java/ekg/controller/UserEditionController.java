@@ -2,7 +2,10 @@ package ekg.controller;
 
 import ekg.AppConfig;
 import ekg.UsersRepository;
+import ekg.WebSecurityConfig;
 import ekg.entity.UserEntity;
+import ekg.services.UserRepositoryService;
+import ekg.utility.DataFolderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +17,16 @@ public class UserEditionController {
 
     final
     AppConfig appConfig;
-    final
-    UsersRepository repository;
-
-    public UserEditionController(UsersRepository repository, AppConfig appConfig) {
+    private final UserRepositoryService repositoryService;
+    public UserEditionController(UserRepositoryService repositoryService, AppConfig appConfig) {
         this.appConfig = appConfig;
-        this.repository = repository;
+        this.repositoryService =repositoryService;
     }
 
     @GetMapping("/user_edition")
     public String showUserEdition(Model model) {
         model.addAttribute("user", appConfig.getUser());
-        return "/user_edition";
+        return "user_edition";
     }
 
     @PostMapping("/send_edit")
@@ -38,15 +39,15 @@ public class UserEditionController {
         user.setNote(note);
         user.setAge(age);
         user.setName(name);
-        repository.save(user);
-        return "redirect:/home";
+        if (repositoryService.updateUser(user)) System.out.println("user updated correctly");;
+        return "redirect:home";
     }
     @PostMapping("/delete_user")
     public String userDelete(){
-        repository.delete(appConfig.getUser());
-        appConfig.setUser(null);
-        appConfig.setResults_1(null);
-        appConfig.setResults_2(null);
-        return "redirect:/login";
+        long temId = appConfig.getUser().getId();
+        if (repositoryService.deleteUser(appConfig.getUser())) System.out.println("user deleted correctly");
+        DataFolderService folderService = new DataFolderService();
+        folderService.RemoveUserDataFile(temId);
+        return "redirect:login";
     }
 }

@@ -42,34 +42,26 @@ public class AppConfig {
         return results_1;
     }
 
-    public boolean setResults_1(ResultsEntity results) {
-        if (results != null && results_1 != null) {
-            System.out.println("case1");
-            results_2 = results;
-            return true;
-        }
-        if (results != null && results_1 == null) {
-            System.out.println("case2");
-            results_1 = results;
-            return true;
-        }
-        if (results != null && results_1!=null){
-            System.out.println("case3");
-            results_2 = results;
-            return true;
-        }
-        if (results == null) {
-            System.out.println("case4");
+    public boolean setResults(ResultsEntity results) {
+        setResultsHierarchy();
+        if (results==null){
             results_1 = null;
             return true;
         }
-        if (results_2 != null) {
-            System.out.println("case5");
+        if (results_1 == null) {
+            results_1 = results;
+            return true;
+        }else {
+            results_2 = results;
+        }
+        return false;
+    }
+
+    public void setResultsHierarchy() {
+        if (results_1 == null && results_2 != null) {
             results_1 = results_2;
             results_2 = null;
-            return true;
         }
-    return false;
     }
 
     public ResultsEntity getResults_2() {

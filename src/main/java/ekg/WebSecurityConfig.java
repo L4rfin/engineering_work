@@ -1,7 +1,5 @@
 package ekg;
 
-import ekg.utility.DataReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,12 +24,12 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/css/**","/img/**").permitAll()
+                        .requestMatchers("/css/**","/img/**","/templates/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")  // Ustawienie niestandardowej strony logowania
-                        .defaultSuccessUrl("/user_option", true)  // Po poprawnym logowaniu
+                        .defaultSuccessUrl("/user_option",true)  // Po poprawnym logowaniu
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll
