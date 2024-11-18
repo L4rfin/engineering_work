@@ -1,3 +1,8 @@
+
+CREATE USER 'ekg_user'@'localhost' IDENTIFIED BY 'zaq1@WSX';
+GRANT ALL PRIVILEGES ON ekg_test.* TO 'ekg_user'@'localhost';
+FLUSH PRIVILEGES;
+
 CREATE DATABASE ekg_test;
 
 CREATE TABLE `ekg_test`.`user` (`id` INT NULL AUTO_INCREMENT , `name` TEXT NOT NULL , `age` INT NOT NULL , `note` TEXT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
