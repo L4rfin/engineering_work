@@ -1,0 +1,8 @@
+adafruit-circuitpython-ads1x15
+board
+matplotlib
+numpy
+adafruit-circuitpython-charlcd
+digitalio
+busio
+adafruit_character_lcd
